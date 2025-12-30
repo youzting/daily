@@ -88,17 +88,29 @@ public class DailyService {
 
 
     @Transactional(readOnly = true)
-    public DailyGetResponse getOne(Long dailyid){
-        Daily daily = dailyRepository.findById(dailyid).orElseThrow(
+    public DailyGetResponse getOne(Long dailyId){
+        Daily daily = dailyRepository.findById(dailyId).orElseThrow(
                 () -> new IllegalStateException("일정이 없습니다.")
         );
+        // Daily의 comments리스트를 가져와서 CommentGetResponse(dto)로 매핑 (daily는 조회된 dailyId)
+        List<CommentGetResponse> comments = daily.getComments().stream()
+                .map(c -> new CommentGetResponse(
+                        c.getId(),
+                        c.getContent(),
+                        c.getCommenter(),
+                        c.getCreatedAt(),
+                        c.getUpdateAt()
+                ))
+                .toList();
+
         return new DailyGetResponse(
                 daily.getId(),
                 daily.getTitle(),
                 daily.getText(),
                 daily.getName(),
                 daily.getCreatedAt(),
-                daily.getUpdateAt()
+                daily.getUpdateAt(),
+                comments
         );
     }
 
