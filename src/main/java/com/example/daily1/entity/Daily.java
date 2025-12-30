@@ -1,21 +1,15 @@
 package com.example.daily1.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jdk.jfr.Enabled;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
-@Enabled
+@Entity
 @Table(name = "dailys")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Daily {
+public class Daily extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +18,6 @@ public class Daily {
     private String text;
     private String name;
     private String password;
-    private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
 
     public Daily(String title, String text, String name, String password) {
         this.title = title;

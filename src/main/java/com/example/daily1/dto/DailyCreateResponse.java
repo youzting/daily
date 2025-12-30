@@ -8,6 +8,7 @@ public class DailyCreateResponse {
     private final String text;
     private final String name;
 
+
     public DailyCreateResponse(String title, String text, String name) {
         this.title = title;
         this.text = text;

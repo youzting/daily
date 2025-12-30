@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DailyRepository extends JpaRepository<Daily, Long> {
 
-    List<Daily> findByNameOrderByUpdatedAtDesc(String name);
+    List<Daily> findByNameOrderByUpdateAtDesc(String name);
 
-    List<Daily> findAllByOrderByUpdatedAtDesc();
+    List<Daily> findAllByOrderByUpdateAtDesc();
 }

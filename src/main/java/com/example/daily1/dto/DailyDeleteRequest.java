@@ -3,8 +3,6 @@ package com.example.daily1.dto;
 import lombok.Getter;
 
 @Getter
-public class DailyUpdateRequest {
-    private String title;
-    private String name;
+public class DailyDeleteRequest {
     private String password;
 }

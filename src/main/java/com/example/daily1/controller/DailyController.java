@@ -1,8 +1,6 @@
 package com.example.daily1.controller;
 
-import com.example.daily1.dto.DailyCreateRequest;
-import com.example.daily1.dto.DailyCreateResponse;
-import com.example.daily1.dto.DailyGetResponse;
+import com.example.daily1.dto.*;
 import com.example.daily1.service.DailyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,8 +28,21 @@ public class DailyController {
     }
 
     @GetMapping("/dailys/{dailysId}")
-    public ResponseEntity<DailyGetResponse> getById(@PathVariable Long dailysId) {
+    public ResponseEntity<DailyGetResponse> getById(@PathVariable("dailysId") Long dailysId) {
         DailyGetResponse result = dailyService.getOne(dailysId);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    @PutMapping("/dailys/{dailysId}")
+    public ResponseEntity<DailyUpdateResponse> update(@PathVariable("dailysId") Long dailysId, @RequestBody DailyUpdateRequest request) {
+        DailyUpdateResponse result = dailyService.update(dailysId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @DeleteMapping("/dailys/{dailysId}")
+    public ResponseEntity<Void> delete(@PathVariable("dailysId") Long dailysId, @RequestBody DailyDeleteRequest request) {
+        dailyService.delete(dailysId, request);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

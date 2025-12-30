@@ -1,13 +1,11 @@
 package com.example.daily1.service;
 
-import com.example.daily1.dto.DailyCreateRequest;
-import com.example.daily1.dto.DailyCreateResponse;
-import com.example.daily1.dto.DailyGetResponse;
+import com.example.daily1.dto.*;
 import com.example.daily1.entity.Daily;
 import com.example.daily1.repository.DailyRepository;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +36,9 @@ public class DailyService {
         List<Daily> dailys;
 
         if (name == null || name.isBlank()) {
-            dailys = dailyRepository.findAllByOrderByUpdatedAtDesc();
+            dailys = dailyRepository.findAllByOrderByUpdateAtDesc();
         } else {
-            dailys = dailyRepository.findByNameOrderByUpdatedAtDesc(name);
+            dailys = dailyRepository.findByNameOrderByUpdateAtDesc(name);
         }
 
         List<DailyGetResponse> dtos = new ArrayList<>();
@@ -49,7 +47,9 @@ public class DailyService {
                     daily.getId(),
                     daily.getTitle(),
                     daily.getText(),
-                    daily.getName()
+                    daily.getName(),
+                    daily.getCreatedAt(),
+                    daily.getUpdateAt()
             );
             dtos.add(dto);
         }
@@ -65,7 +65,41 @@ public class DailyService {
                 daily.getId(),
                 daily.getTitle(),
                 daily.getText(),
-                daily.getName()
+                daily.getName(),
+                daily.getCreatedAt(),
+                daily.getUpdateAt()
         );
+    }
+
+    @Transactional
+    public DailyUpdateResponse update(Long dailyId, DailyUpdateRequest request){
+        Daily daily = dailyRepository.findById(dailyId).orElseThrow(
+                () -> new IllegalStateException("일정이 없습니다.")
+        );
+        if (!daily.getPassword().equals(request.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        daily.update(request.getTitle(), request.getName());
+        return new DailyUpdateResponse(
+                daily.getId(),
+                daily.getTitle(),
+                daily.getText(),
+                daily.getName(),
+                daily.getCreatedAt(),
+                daily.getUpdateAt()
+        );
+    }
+
+    @Transactional
+    public void delete(Long dailyid, DailyDeleteRequest request){
+        //비밀번호 검증을 위해 existsById 대신 findById사용
+        Daily daily = dailyRepository.findById(dailyid).orElseThrow(
+                () -> new IllegalStateException("일정이 없습니다.")
+        );
+        if (!daily.getPassword().equals(request.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        //이미 id로 조회했기 때문에 delete사용
+        dailyRepository.delete(daily);
     }
 }
