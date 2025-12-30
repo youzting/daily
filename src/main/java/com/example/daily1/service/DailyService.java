@@ -1,7 +1,9 @@
 package com.example.daily1.service;
 
 import com.example.daily1.dto.*;
+import com.example.daily1.entity.Comment;
 import com.example.daily1.entity.Daily;
+import com.example.daily1.repository.CommentRepository;
 import com.example.daily1.repository.DailyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DailyService {
     private final DailyRepository dailyRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public DailyCreateResponse save(DailyCreateRequest request){
@@ -29,6 +32,33 @@ public class DailyService {
                 savedDaily.getText(),
                 savedDaily.getName()
         );
+    }
+
+    @Transactional
+    public CommentCreateResponse saveComment(Long dailyId, CommentCreateRequest request){
+        Daily daily = dailyRepository.findById(dailyId).orElseThrow(
+                () -> new IllegalStateException("일정이 없습니다.")
+        );
+        long count = commentRepository.countByDailyId(dailyId);
+        if(count >= 10){
+            throw new IllegalStateException("댓글은 10개까지");
+        }
+
+        Comment comment = new Comment(
+                request.getContent(),
+                request.getCommenter(),
+                request.getCommentpass(),
+                daily
+        );
+
+        Comment saveComent = commentRepository.save(comment);
+
+        return new CommentCreateResponse(
+                saveComent.getContent(),
+                saveComent.getCommenter(),
+                saveComent.getDaily().getId()
+        );
+
     }
 
     @Transactional(readOnly = true)
@@ -55,6 +85,7 @@ public class DailyService {
         }
         return dtos;
     }
+
 
     @Transactional(readOnly = true)
     public DailyGetResponse getOne(Long dailyid){

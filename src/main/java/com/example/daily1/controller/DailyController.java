@@ -21,6 +21,12 @@ public class DailyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+    @PostMapping("/dailys/{dailysId}/comments")
+    public ResponseEntity<CommentCreateResponse> createComment(@PathVariable Long dailysId, @RequestBody CommentCreateRequest request) {
+        CommentCreateResponse result = dailyService.saveComment(dailysId, request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
     @GetMapping("/dailys")
     public ResponseEntity<List<DailyGetResponse>> getAll(@RequestParam(required = false) String name) {//Query parameter로 name 값으로 조회 가능
         List<DailyGetResponse> result = dailyService.getAll(name);
