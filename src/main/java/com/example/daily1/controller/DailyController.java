@@ -21,9 +21,9 @@ public class DailyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    @PostMapping("/dailys/{dailysId}/comments")
-    public ResponseEntity<CommentCreateResponse> createComment(@PathVariable Long dailysId, @RequestBody CommentCreateRequest request) {
-        CommentCreateResponse result = dailyService.saveComment(dailysId, request);
+    @PostMapping("/dailys/{dailyId}/comments")
+    public ResponseEntity<CommentCreateResponse> createComment(@PathVariable Long dailyId, @RequestBody CommentCreateRequest request) {
+        CommentCreateResponse result = dailyService.saveComment(dailyId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
@@ -33,21 +33,21 @@ public class DailyController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @GetMapping("/dailys/{dailysId}")
-    public ResponseEntity<DailyGetResponse> getById(@PathVariable("dailysId") Long dailysId) {
-        DailyGetResponse result = dailyService.getOne(dailysId);
+    @GetMapping("/dailys/{dailyId}")
+    public ResponseEntity<DailyGetOneResponse> getById(@PathVariable("dailyId") Long dailyId) {
+        DailyGetOneResponse result = dailyService.getOne(dailyId);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PutMapping("/dailys/{dailysId}")
-    public ResponseEntity<DailyUpdateResponse> update(@PathVariable("dailysId") Long dailysId, @RequestBody DailyUpdateRequest request) {
-        DailyUpdateResponse result = dailyService.update(dailysId, request);
+    @PutMapping("/dailys/{dailyId}")
+    public ResponseEntity<DailyUpdateResponse> update(@PathVariable("dailyId") Long dailyId, @RequestBody DailyUpdateRequest request) {
+        DailyUpdateResponse result = dailyService.update(dailyId, request);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @DeleteMapping("/dailys/{dailysId}")
-    public ResponseEntity<Void> delete(@PathVariable("dailysId") Long dailysId, @RequestBody DailyDeleteRequest request) {
-        dailyService.delete(dailysId, request);
+    @DeleteMapping("/dailys/{dailyId}")
+    public ResponseEntity<Void> delete(@PathVariable("dailyId") Long dailyId, @RequestBody DailyDeleteRequest request) {
+        dailyService.delete(dailyId, request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

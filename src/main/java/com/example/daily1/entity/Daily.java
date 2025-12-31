@@ -17,9 +17,13 @@ public class Daily extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 30)
     private String title;
+    @Column(nullable = false, length = 200)
     private String text;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String password;
 
     //mappedBy= "daily": daily.getComments가 실행 되었을 때 DB에서 comments테이블을 FK(daily_id) 기준으로 조회한 뒤에 List<Comment >comments에 매핑한다

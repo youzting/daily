@@ -88,7 +88,7 @@ public class DailyService {
 
 
     @Transactional(readOnly = true)
-    public DailyGetResponse getOne(Long dailyId){
+    public DailyGetOneResponse getOne(Long dailyId){
         Daily daily = dailyRepository.findById(dailyId).orElseThrow(
                 () -> new IllegalStateException("일정이 없습니다.")
         );
@@ -103,7 +103,7 @@ public class DailyService {
                 ))
                 .toList();
 
-        return new DailyGetResponse(
+        return new DailyGetOneResponse(
                 daily.getId(),
                 daily.getTitle(),
                 daily.getText(),
