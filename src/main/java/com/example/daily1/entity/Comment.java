@@ -16,7 +16,9 @@ public class Comment extends BaseEntity{
 
     @Column(nullable = false, length = 100)
     private String content;
+    @Column(nullable = false)
     private String commenter;
+    @Column(nullable = false)
     private String commentpass;
 
     public Comment(String content, String commenter, String password, Daily daily) {
@@ -26,7 +28,7 @@ public class Comment extends BaseEntity{
         this.daily = daily;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)//여러개의 댓글이 하나의 일정에 속한다. LAZY는 필요할 대 가져오는 방식
+    @ManyToOne(fetch = FetchType.LAZY)//여러개의 댓글이 하나의 일정에 속한다. LAZY는 필요할 대 가져온다 comment에서 daily를 조회
     @JoinColumn(name="daily_id")
     private Daily daily;
 }

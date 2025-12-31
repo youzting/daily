@@ -15,7 +15,7 @@ public class DailyGetResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime updateAt;
 
-    //전체 조회 생성자 분리
+    //전체 조회
     public DailyGetResponse(Long id, String title, String text, String name, LocalDateTime createdAt, LocalDateTime updateAt) {
         this.id = id;
         this.title = title;

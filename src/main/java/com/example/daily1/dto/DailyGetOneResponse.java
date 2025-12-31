@@ -16,7 +16,7 @@ public class DailyGetOneResponse {
     private final LocalDateTime updateAt;
     private final List<CommentGetResponse> comments = new ArrayList<>();
 
-    //단건 조회 생성자 분리
+    //단건 조회
     public DailyGetOneResponse(Long id, String title, String text, String name, LocalDateTime createdAt, LocalDateTime updateAt, List<CommentGetResponse> comments) {
         this.id = id;
         this.title = title;

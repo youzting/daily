@@ -28,13 +28,13 @@ public class DailyController {
     }
 
     @GetMapping("/dailys")
-    public ResponseEntity<List<DailyGetResponse>> getAll(@RequestParam(required = false) String name) {//Query parameter로 name 값으로 조회 가능
+    public ResponseEntity<List<DailyGetResponse>> getAll(@RequestParam(required = false) String name) {//Query parameter로 name 값으로 조회 가능(필수 아님)
         List<DailyGetResponse> result = dailyService.getAll(name);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @GetMapping("/dailys/{dailyId}")
-    public ResponseEntity<DailyGetOneResponse> getById(@PathVariable("dailyId") Long dailyId) {
+    public ResponseEntity<DailyGetOneResponse> getOne(@PathVariable("dailyId") Long dailyId) {
         DailyGetOneResponse result = dailyService.getOne(dailyId);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
@@ -46,7 +46,7 @@ public class DailyController {
     }
 
     @DeleteMapping("/dailys/{dailyId}")
-    public ResponseEntity<Void> delete(@PathVariable("dailyId") Long dailyId, @RequestBody DailyDeleteRequest request) {
+    public ResponseEntity<Void> delete(@PathVariable("dailyId") Long dailyId, @RequestBody DailyDeleteRequest request) {//password Request
         dailyService.delete(dailyId, request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

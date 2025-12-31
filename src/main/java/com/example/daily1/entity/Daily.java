@@ -17,12 +17,16 @@ public class Daily extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, length = 30)
     private String title;
+
     @Column(nullable = false, length = 200)
     private String text;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String password;
 
