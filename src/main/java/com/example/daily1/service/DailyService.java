@@ -120,7 +120,7 @@ public class DailyService {
                 () -> new IllegalStateException("일정이 없습니다.")
         );
         if (!daily.getPassword().equals(request.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
         daily.update(request.getTitle(), request.getName());
         return new DailyUpdateResponse(
@@ -140,7 +140,7 @@ public class DailyService {
                 () -> new IllegalStateException("일정이 없습니다.")
         );
         if (!daily.getPassword().equals(request.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
         //이미 id로 조회했기 때문에 delete사용
         dailyRepository.delete(daily);
